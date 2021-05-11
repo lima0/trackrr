@@ -1,10 +1,8 @@
-name: build and release
-
 on:
   push:
     tags:
       - '*v'
-
+name: build and release
 jobs:
   build:
     runs-on: ubuntu-latest
