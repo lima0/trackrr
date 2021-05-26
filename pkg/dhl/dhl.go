@@ -7,7 +7,8 @@ import (
 	"io/ioutil"
 	"net/http"
 )
-
+// GetResponse Accepts a string of DHL Tracking numbers, each separated with a comma.
+// It returns a response struct with all of the response data, or an error and an empty response
 func GetResponse(ID string) (Response, error) {
 	r, err := http.Get("https://mydhl.express.dhl/shipmentTracking?AWB=" + ID + "&countryCode=us&languageCode=en")
 	if err != nil {
@@ -26,6 +27,7 @@ func GetResponse(ID string) (Response, error) {
 	return res, nil
 }
 
+// PrintResponse accepts a Response type and will print the shipment info inside it
 func PrintResponse(res Response) {
 	c := color.New(color.FgBlue)
 	for _, shipment := range res.Results {
@@ -40,7 +42,9 @@ func PrintResponse(res Response) {
 		c.Printf("Remark: ")
 		fmt.Printf("%s\n", shipment.EventRemark)
 		c.Printf("Next step: ")
-		fmt.Printf("%s\n\n", shipment.EventNextStep)
+		fmt.Printf("%s\n", shipment.EventNextStep)
+		c.Printf("Estimated Delivery: ")
+		fmt.Printf("%s\n\n", shipment.Edd.Label + " " + shipment.Edd.Product)
 	}
 }
 

@@ -7,8 +7,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - name: Build
+      - uses: actions/checkout@v2
         run: |
           export PATH=${PATH}:`go env GOPATH`/bin
           v=${GITHUB_REF#refs/*/} ./release.sh
